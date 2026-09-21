@@ -1,5 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ProductApiService } from './services/product-api.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [RouterOutlet],
@@ -8,5 +10,12 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('vending-machine');
+  productsApi = inject(ProductApiService);
+  products = toSignal(this.productsApi.getProducts(), { initialValue: []});
+
+  constructor() {
+    effect(() => {
+      console.log('Products:', this.products());
+    });
+  }
 }
