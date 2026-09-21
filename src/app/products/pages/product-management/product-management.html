@@ -1,0 +1,22 @@
+<section class="product-management">
+  <header class="product-management__header">
+    <div>
+      <h1>Product Management</h1>
+      <p>Manage products available in the vending machine.</p>
+    </div>
+
+    <button type="button">
+      Add product
+    </button>
+  </header>
+
+  @if (store.loading()) {
+    <p>Loading products...</p>
+  } @else if (store.error()) {
+    <p role="alert">
+      {{ store.error() }}
+    </p>
+  } @else {
+    <app-product-list [products]="store.products()" />
+  }
+</section>

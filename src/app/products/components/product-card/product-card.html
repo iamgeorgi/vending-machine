@@ -1,0 +1,33 @@
+<article class="product-card">
+  <header>
+    <h2>{{ product().name }}</h2>
+
+    <span>
+      {{ product().category }}
+    </span>
+  </header>
+
+  <div class="product-card__details">
+    <p>
+      Price:
+      <strong>
+        {{ product().price / 100 | currency: 'EUR' }}
+      </strong>
+    </p>
+
+    <p>
+      Stock:
+      <strong>{{ product().quantity }}</strong>
+    </p>
+  </div>
+
+  <footer class="product-card__actions">
+    <button type="button">
+      Edit
+    </button>
+
+    <button type="button">
+      Delete
+    </button>
+  </footer>
+</article>
