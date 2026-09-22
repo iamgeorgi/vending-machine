@@ -1,12 +1,19 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 import { ProductsStore } from '../../store/product.store';
 import { ProductList } from '../../components/product-list/product-list';
 import { ProductForm } from '../../components/product-form/product-form';
 import { ProductFormValue } from '../../../models/product.model';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  imports: [ProductList],
+  imports: [
+    ProductList,
+    MatButtonModule,
+    MatIconModule,
+  ],
   selector: 'app-product-management',
   styleUrl: './product-management.scss',
   templateUrl: './product-management.html',
@@ -35,14 +42,16 @@ export class ProductManagement {
       data: product,
     });
 
-    dialogRef.afterClosed().subscribe((formValue: ProductFormValue | undefined) => {
-      if (formValue) {
-        this.store.saveProduct(formValue, productId);
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .subscribe((formValue: ProductFormValue | undefined) => {
+        if (formValue) {
+          this.store.saveProduct(formValue, productId);
+        }
+      });
   }
 
-  onProductDelete(id: string) {
+  onProductDelete(id: string): void {
     this.store.deleteProduct(id);
   }
 }

@@ -4,6 +4,7 @@ export type Product = {
     category: ProductCategory;
     price: number;
     quantity: number;
+    imageUrl?: string;
 }
 
 export type ProductFormValue = {

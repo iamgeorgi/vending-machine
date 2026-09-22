@@ -1,18 +1,25 @@
 <section class="product-management">
   <header class="product-management__header">
     <div>
+      <span class="product-management__eyebrow"> Vending administration </span>
+
       <h1>Product Management</h1>
+
       <p>Manage products available in the vending machine.</p>
     </div>
-    <button mat-flat-button type="button" (click)="openProductDialog()">Add product</button>
+
+    <button mat-flat-button class="add-product-button" type="button" (click)="openProductDialog()">
+      <mat-icon>add</mat-icon>
+      Add product
+    </button>
   </header>
 
   @if (store.loading()) {
-    <p>Loading products...</p>
+    <div class="state-message">Loading products...</div>
   } @else if (store.error()) {
-    <p role="alert">
+    <div class="state-message state-message--error" role="alert">
       {{ store.error() }}
-    </p>
+    </div>
   } @else {
     <app-product-list
       [products]="store.products()"

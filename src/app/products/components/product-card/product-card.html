@@ -1,33 +1,62 @@
 <article class="product-card">
-  <header>
-    <h2>{{ product().name }}</h2>
+  <div class="product-card__image-wrapper">
+    <img
+      class="product-card__image"
+      [src]="getProductImage()"
+      [alt]="product().name"
+    />
 
-    <span>
-      {{ product().category }}
-    </span>
-  </header>
+    <button
+      mat-icon-button
+      class="product-card__delete"
+      type="button"
+      aria-label="Delete product"
+      (click)="onDelete(product().id)"
+    >
+      <mat-icon>delete_outline</mat-icon>
+    </button>
 
-  <div class="product-card__details">
-    <p>
-      Price:
-      <strong>
-        {{ product().price / 100 | currency: 'EUR' }}
-      </strong>
-    </p>
-
-    <p>
-      Stock:
-      <strong>{{ product().quantity }}</strong>
-    </p>
+    @if (product().quantity === 0) {
+      <span class="product-card__sold-out">
+        Out of stock
+      </span>
+    }
   </div>
 
-  <footer class="product-card__actions">
-    <button type="button" (click)="onEdit(product().id)">
-      Edit
-    </button>
+  <div class="product-card__content">
+    <div class="product-card__category">
+      {{ product().category }}
+    </div>
 
-    <button type="button" (click)="onDelete(product().id)">
-      Delete
-    </button>
-  </footer>
+    <h2>
+      {{ product().name }}
+    </h2>
+
+    <div class="product-card__meta">
+      <span>
+        Stock
+        <strong>{{ product().quantity }}</strong>
+      </span>
+
+      <span class="product-card__stock-limit">
+        / 15
+      </span>
+    </div>
+
+    <footer class="product-card__footer">
+      <strong class="product-card__price">
+        {{ product().price / 100 | currency: 'EUR' }}
+      </strong>
+
+      <button
+        mat-flat-button
+        class="product-card__edit"
+        type="button"
+        (click)="onEdit(product().id)"
+      >
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+    </footer>
+  </div>
 </article>

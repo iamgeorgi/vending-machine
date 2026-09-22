@@ -6,56 +6,64 @@
       "name": "Coca-Cola",
       "category": "beverage",
       "price": 180,
-      "quantity": 12
+      "quantity": 12,
+      "imageUrl": "assets/products/cola.png"
     },
     {
       "id": "2",
       "name": "Sprite",
       "category": "beverage",
       "price": 170,
-      "quantity": 8
+      "quantity": 8,
+      "imageUrl": "assets/products/sprite.png"
     },
     {
       "id": "3",
       "name": "Fanta Orange",
       "category": "beverage",
       "price": 160,
-      "quantity": 6
+      "quantity": 6,
+      "imageUrl": "assets/products/fanta.png"
     },
     {
       "id": "4",
       "name": "Mineral Water",
       "category": "beverage",
       "price": 120,
-      "quantity": 15
+      "quantity": 15,
+      "imageUrl": "assets/products/water.png"
     },
     {
       "id": "5",
       "name": "Snickers",
       "category": "candy",
       "price": 150,
-      "quantity": 10
+      "quantity": 10,
+      "imageUrl": "assets/products/snickers.png"
     },
     {
       "id": "6",
       "name": "Twix",
       "category": "candy",
       "price": 140,
-      "quantity": 4
+      "quantity": 4,
+      "imageUrl": "assets/products/twix.png"
     },
     {
       "id": "7",
       "name": "Salted Chips",
       "category": "snack",
       "price": 200,
-      "quantity": 9
+      "quantity": 9,
+      "imageUrl": "assets/products/chips.png"
     },
     {
       "id": "8",
       "name": "Peanuts",
       "category": "snack",
       "price": 130,
-      "quantity": 7
+      "quantity": 7,
+      "imageUrl": "assets/products/peanuts.png"
     }
   ]
 }
