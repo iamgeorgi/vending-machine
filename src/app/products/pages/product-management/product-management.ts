@@ -29,10 +29,6 @@ export class ProductManagement {
       return;
     }
 
-    if (productId) {
-      this.store.selectedProductid(productId);
-    }
-
     const dialogRef = this.dialog.open(ProductForm, {
       width: '500px',
       maxWidth: '90vw',
@@ -41,7 +37,7 @@ export class ProductManagement {
 
     dialogRef.afterClosed().subscribe((formValue: ProductFormValue | undefined) => {
       if (formValue) {
-        this.store.saveProduct(formValue);
+        this.store.saveProduct(formValue, productId);
       }
     });
   }
