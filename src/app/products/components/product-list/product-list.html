@@ -1,7 +1,7 @@
 @if (products().length) {
   <div class="product-list">
     @for (product of products(); track product.id) {
-      <app-product-card [product]="product" />
+      <app-product-card [product]="product" (edit)="onProductEdit($event)" (delete)="onProductDelete($event)" />
     }
   </div>
 } @else {

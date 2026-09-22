@@ -4,10 +4,7 @@
       <h1>Product Management</h1>
       <p>Manage products available in the vending machine.</p>
     </div>
-
-    <button type="button">
-      Add product
-    </button>
+    <button mat-flat-button type="button" (click)="openProductDialog()">Add product</button>
   </header>
 
   @if (store.loading()) {
@@ -17,6 +14,10 @@
       {{ store.error() }}
     </p>
   } @else {
-    <app-product-list [products]="store.products()" />
+    <app-product-list
+      [products]="store.products()"
+      (productEdit)="openProductDialog($event)"
+      (productDelete)="onProductDelete($event)"
+    />
   }
 </section>

@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ProductsStore } from '../../store/product.store';
 import { ProductList } from '../../components/product-list/product-list';
+import { ProductForm } from '../../components/product-form/product-form';
+import { ProductFormValue } from '../../../models/product.model';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   imports: [ProductList],
@@ -11,8 +14,39 @@ import { ProductList } from '../../components/product-list/product-list';
 })
 export class ProductManagement {
   readonly store = inject(ProductsStore);
+  private readonly dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.store.loadProducts();
+  }
+
+  openProductDialog(productId?: string): void {
+    const product = productId
+      ? this.store.products().find((product) => product.id === productId)
+      : null;
+
+    if (productId && !product) {
+      return;
+    }
+
+    if (productId) {
+      this.store.selectedProductid(productId);
+    }
+
+    const dialogRef = this.dialog.open(ProductForm, {
+      width: '500px',
+      maxWidth: '90vw',
+      data: product,
+    });
+
+    dialogRef.afterClosed().subscribe((formValue: ProductFormValue | undefined) => {
+      if (formValue) {
+        this.store.saveProduct(formValue);
+      }
+    });
+  }
+
+  onProductDelete(id: string) {
+    this.store.deleteProduct(id);
   }
 }

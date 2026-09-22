@@ -22,11 +22,11 @@
   </div>
 
   <footer class="product-card__actions">
-    <button type="button">
+    <button type="button" (click)="onEdit(product().id)">
       Edit
     </button>
 
-    <button type="button">
+    <button type="button" (click)="onDelete(product().id)">
       Delete
     </button>
   </footer>
