@@ -85,5 +85,12 @@ export const VendingStore = signalStore(
         error: null,
       });
     },
+    reset: () => {
+      patchState(store, {
+        lastChange: store.insertedCoins(),
+        insertedCoins: [],
+        error: null,
+      });
+    },
   })),
 );
