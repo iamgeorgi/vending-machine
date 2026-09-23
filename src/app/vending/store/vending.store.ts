@@ -15,9 +15,9 @@ const initialState: VendingState = {
   error: null,
 };
 
-export const ACCEPTED_COINS = [200, 100, 50, 20, 10] as const;
+export const ACCEPTED_COINS = [200, 100, 50, 20, 10, 5, 2, 1] as const;
 
-export function calculateChange(amount: number): number[] {
+export function calculateChange(amount: number): number[] | null {
   const result: number[] = [];
 
   let remaining = amount;
@@ -29,7 +29,7 @@ export function calculateChange(amount: number): number[] {
     }
   }
 
-  return result;
+  return remaining === 0 ? result : null;
 }
 
 export const VendingStore = signalStore(
@@ -76,6 +76,14 @@ export const VendingStore = signalStore(
       const changeAmount = inserted - product.price;
 
       const change = calculateChange(changeAmount);
+
+      if (!change) {
+        patchState(store, {
+          error: 'Unable to return exact change.',
+        });
+
+        return;
+      }
 
       productsStore.decreaseProductQuantity(product.id);
 
