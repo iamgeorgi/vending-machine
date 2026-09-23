@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder, AbstractControl,
   ReactiveFormsModule,
@@ -48,9 +48,19 @@ export class ProductForm {
   readonly categories = Object.values(ProductCategory);
 
   readonly form = this.fb.nonNullable.group({
-    name: ['', [Validators.required, Validators.maxLength(100)]],
+    name: ['', [Validators.required, Validators.maxLength(100),
+      (control: AbstractControl) => typeof control.value === 'string' && control.value.trim().length > 0
+        ? null : { required: true },
+    ]],
     category: [ProductCategory.Beverage, Validators.required],
-    price: [0, [Validators.required, Validators.min(0.01)]],
+    price: [0, [Validators.required, Validators.min(0.01),
+      (control: AbstractControl) => {
+        if (control.value == null) return null;
+        const cents = Math.round(control.value * 100);
+        if (!Number.isSafeInteger(cents)) return { priceRange: true };
+        return cents / 100 === control.value ? null : { centPrecision: true };
+      },
+    ]],
     quantity: [
       0,
       [

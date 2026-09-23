@@ -2,12 +2,8 @@
   {{ product ? 'Edit product' : 'Add product' }}
 </h2>
 
+<form class="product-form" [formGroup]="form" (ngSubmit)="onSubmit()">
 <mat-dialog-content>
-  <form
-    class="product-form"
-    [formGroup]="form"
-    (ngSubmit)="onSubmit()"
-  >
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
 
@@ -20,6 +16,8 @@
         <mat-error>
           Product name is required.
         </mat-error>
+      } @else if (form.controls.name.hasError('maxlength')) {
+        <mat-error>Product name cannot exceed 100 characters.</mat-error>
       }
     </mat-form-field>
 
@@ -37,6 +35,15 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Price</mat-label>
+      @if (form.controls.price.hasError('required')) {
+        <mat-error>Price is required.</mat-error>
+      } @else if (form.controls.price.hasError('min')) {
+        <mat-error>Price must be at least €0.01.</mat-error>
+      } @else if (form.controls.price.hasError('priceRange')) {
+        <mat-error>Price must convert to a safe integer number of cents.</mat-error>
+      } @else if (form.controls.price.hasError('centPrecision')) {
+        <mat-error>Price must have no more than two decimal places.</mat-error>
+      }
 
       <input
         matInput
@@ -64,7 +71,6 @@
         <mat-error>Quantity must be a whole number from 0 to 15.</mat-error>
       }
     </mat-form-field>
-  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
@@ -78,10 +84,10 @@
 
   <button
     mat-flat-button
-    type="button"
+    type="submit"
     [disabled]="form.invalid"
-    (click)="onSubmit()"
   >
     {{ product ? 'Save changes' : 'Add product' }}
   </button>
 </mat-dialog-actions>
+</form>
