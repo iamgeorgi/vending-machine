@@ -8,7 +8,7 @@
       <p>Manage products available in the vending machine.</p>
     </div>
 
-    <button mat-flat-button class="add-product-button" type="button" (click)="openProductDialog()">
+    <button mat-flat-button class="add-product-button" type="button" (click)="openProductDialog()" [disabled]="!store.loaded()">
       <mat-icon>add</mat-icon>
       Add product
     </button>
