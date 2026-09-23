@@ -33,16 +33,16 @@ export class ProductCard {
   getCategoryImage(): string {
     switch (this.product().category) {
       case ProductCategory.Beverage:
-        return 'assets/categories/beverage.webp';
+        return 'assets/categories/beverage.png';
 
       case ProductCategory.Snack:
-        return 'assets/categories/snack.webp';
+        return 'assets/categories/snack.png';
 
       case ProductCategory.Candy:
-        return 'assets/categories/candy.webp';
+        return 'assets/categories/candy.png';
 
       default:
-        return 'assets/categories/other.webp';
+        return 'assets/categories/other.png';
     }
   }
 }
