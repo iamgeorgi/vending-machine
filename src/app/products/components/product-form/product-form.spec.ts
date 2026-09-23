@@ -25,9 +25,9 @@ describe('ProductForm', () => {
     ['name', 'x'.repeat(101), 'Product name cannot exceed 100 characters.'],
     ['price', null, 'Price is required.'],
     ['price', 0, 'Price must be at least'],
-    ['price', 1.234, 'Price must have no more than two decimal places.'],
-    ['price', 1e20, 'Price must convert to a safe integer'],
-    ['price', Infinity, 'Price must convert to a safe integer'],
+    ['price', 1.234, 'Use at most two decimal places.'],
+    ['price', 1e20, 'Price is outside the supported range.'],
+    ['price', Infinity, 'Price is outside the supported range.'],
   ])('rejects invalid %s value %s and explains why', async (field, value, message) => {
     component.form.patchValue({ name: 'Water', price: 1.2, quantity: 1 });
     component.form.get(field as string)!.setValue(value);
