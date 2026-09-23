@@ -11,18 +11,20 @@ import { effect, inject } from '@angular/core';
 import { ProductApiService } from '../../services/product-api.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
-import { pipe, switchMap, tap } from 'rxjs';
+import { filter, pipe, switchMap, tap } from 'rxjs';
 
 type ProductState = {
   products: Product[];
   loading: boolean;
   error: string | null;
+  loaded: boolean;
 };
 
 const initialState: ProductState = {
   products: [],
   loading: false,
   error: null,
+  loaded: false,
 };
 
 export const ProductsStore = signalStore(
@@ -33,6 +35,7 @@ export const ProductsStore = signalStore(
   withMethods((store, productsApi = inject(ProductApiService)) => ({
     loadProducts: rxMethod<void>(
       pipe(
+        filter(() => !store.loaded()),
         tap(() => {
           patchState(store, { loading: true, error: null });
         }),
@@ -40,7 +43,7 @@ export const ProductsStore = signalStore(
           productsApi.getProducts().pipe(
             tapResponse({
               next: (products) => {
-                patchState(store, { products, loading: false });
+                patchState(store, { products, loading: false, loaded: true });
               },
               error: (error: unknown) => {
                 patchState(store, {
