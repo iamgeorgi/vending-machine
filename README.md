@@ -88,7 +88,7 @@ Initial product data is provided through JSON Server.
 The mock database is located at:
 
 ```text
-mock-api/db.json
+api/db.json
 ```
 
 The API is used only to load the initial product inventory.

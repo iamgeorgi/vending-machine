@@ -1,13 +1,11 @@
 import {
-  getState,
   patchState,
   signalStore,
-  withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
 import { Product, ProductFormValue } from '../../models/product.model';
-import { effect, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { ProductApiService } from '../../services/product-api.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
