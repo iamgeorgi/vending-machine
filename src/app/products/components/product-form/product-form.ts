@@ -55,7 +55,7 @@ export class ProductForm {
       0,
       [
         Validators.required,
-        Validators.min(1),
+        Validators.min(0),
         Validators.max(15),
       ],
     ],

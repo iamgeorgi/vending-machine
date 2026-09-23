@@ -1,0 +1,23 @@
+<section class="vending-machine">
+  <header class="vending-machine__header">
+    <div>
+      <span class="vending-machine__eyebrow"> Vending administration </span>
+
+      <h1>Product Management</h1>
+
+      <p>Manage products available in the vending machine.</p>
+    </div>
+  </header>
+
+  @if (productsStore.loading()) {
+    <div class="state-message">Loading products...</div>
+  } @else if (productsStore.error()) {
+    <div class="state-message state-message--error" role="alert">
+      {{ productsStore.error() }}
+    </div>
+  } @else {
+    <app-vending-product-list
+      [products]="productsStore.products()"
+    />
+  }
+</section>

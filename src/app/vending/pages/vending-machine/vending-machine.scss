@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+.vending-machine {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.vending-machine__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 0.25rem 0 0.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  p {
+    margin: 0;
+    color: var(--vm-text-muted);
+    font-size: 1rem;
+  }
+}
+
+.vending-machine__eyebrow {
+  color: var(--vm-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.add-product-button {
+  min-height: 48px;
+  padding-inline: 1.25rem;
+  border-radius: 999px;
+}
+
+.state-message {
+  padding: 2rem;
+  border-radius: 1rem;
+  background: var(--vm-surface);
+  text-align: center;
+}
+
+.state-message--error {
+  color: var(--vm-error);
+}
+
+@media (max-width: 640px) {
+  .vending-machine {
+    width: min(100% - 1.25rem, 1180px);
+    padding-top: 1.25rem;
+  }
+
+  .vending-machine__header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+}

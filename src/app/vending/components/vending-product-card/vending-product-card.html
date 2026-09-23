@@ -1,0 +1,41 @@
+<article class="vending-product-card">
+  <div class="vending-product-card__image-wrapper">
+    <img class="vending-product-card__image" [src]="getProductImage()" [alt]="product().name" />
+
+    @if (product().quantity === 0) {
+      <span class="vending-product-card__sold-out"> Out of stock </span>
+    }
+  </div>
+
+  <div class="vending-product-card__content">
+    <div class="vending-product-card__category">
+      {{ product().category }}
+    </div>
+
+    <h2>
+      {{ product().name }}
+    </h2>
+
+    @if (product().quantity > 0) {
+      <div class="vending-product-card__meta">
+        <span> In Stock </span>
+      </div>
+    }
+
+    <footer class="vending-product-card__footer">
+      <strong class="vending-product-card__price">
+        {{ product().price / 100 | currency: 'EUR' }}
+      </strong>
+
+      <button
+        mat-flat-button
+        class="vending-product-card__buy"
+        type="button"
+        (click)="onBuy(product().id)"
+      >
+        <mat-icon>add_shopping_cart</mat-icon>
+        Buy
+      </button>
+    </footer>
+  </div>
+</article>
