@@ -1,3 +1,4 @@
+import { CoinFormatterPipe } from '../../../shared/pipes/coin-formatter.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-transaction-summary',
   imports: [
     CurrencyPipe,
+    CoinFormatterPipe,
     MatButtonModule,
     MatIconModule,
   ],
@@ -32,9 +34,4 @@ export class TransactionSummary {
     this.reset.emit();
   }
 
-  formatCoin(coin: number): string {
-    return coin >= 100
-      ? `€${coin / 100}`
-      : `${coin}c`;
-  }
 }

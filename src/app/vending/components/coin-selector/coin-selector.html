@@ -16,10 +16,10 @@
         mat-flat-button
         type="button"
         class="coin-selector__coin"
-        [attr.aria-label]="'Insert ' + formatCoin(coin)"
+        [attr.aria-label]="'Insert ' + (coin | coinFormatter)"
         (click)="onInsertCoin(coin)"
       >
-        {{ formatCoin(coin) }}
+        {{ (coin | coinFormatter) }}
       </button>
     }
   </div>

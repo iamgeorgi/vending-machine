@@ -28,7 +28,7 @@
       <div class="transaction-summary__coins">
         @for (coin of returnedCoins(); track $index) {
           <span class="transaction-summary__coin">
-            {{ formatCoin(coin) }}
+            {{ (coin | coinFormatter) }}
           </span>
         }
       </div>

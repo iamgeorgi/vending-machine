@@ -2,7 +2,7 @@
   <div class="vending-product-card__image-wrapper">
     <img class="vending-product-card__image" [src]="getProductImage()" [alt]="product().name" />
 
-    @if (product().quantity === 0) {
+    @if (product().quantity <= 0) {
       <span class="vending-product-card__sold-out"> Out of stock </span>
     }
   </div>
@@ -31,6 +31,8 @@
         mat-flat-button
         class="vending-product-card__buy"
         type="button"
+        [disabled]="product().quantity <= 0"
+        [attr.aria-label]="'Buy ' + product().name"
         (click)="onBuy(product().id)"
       >
         <mat-icon>add_shopping_cart</mat-icon>
