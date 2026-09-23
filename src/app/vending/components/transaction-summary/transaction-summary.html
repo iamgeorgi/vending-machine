@@ -1,0 +1,49 @@
+<section class="transaction-summary">
+  <div class="transaction-summary__header">
+    <div>
+      <span class="transaction-summary__eyebrow"> Current transaction </span>
+
+      <h2>Your balance</h2>
+    </div>
+
+    <div class="transaction-summary__amount">
+      {{ insertedAmount() / 100 | currency: 'EUR' }}
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="transaction-summary__message transaction-summary__message--error" role="alert">
+      <mat-icon>error_outline</mat-icon>
+
+      <span>
+        {{ error() }}
+      </span>
+    </div>
+  }
+
+  @if (returnedCoins().length) {
+    <div class="transaction-summary__change">
+      <span class="transaction-summary__label"> Returned coins </span>
+
+      <div class="transaction-summary__coins">
+        @for (coin of returnedCoins(); track $index) {
+          <span class="transaction-summary__coin">
+            {{ formatCoin(coin) }}
+          </span>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="transaction-summary__actions">
+    <button
+      mat-stroked-button
+      type="button"
+      [disabled]="insertedAmount() === 0"
+      (click)="onReset()"
+    >
+      <mat-icon>restart_alt</mat-icon>
+      Return coins
+    </button>
+  </div>
+</section>

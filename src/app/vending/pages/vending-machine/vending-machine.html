@@ -1,13 +1,20 @@
 <section class="vending-machine">
   <header class="vending-machine__header">
     <div>
-      <span class="vending-machine__eyebrow"> Vending administration </span>
-
-      <h1>Product Management</h1>
-
-      <p>Manage products available in the vending machine.</p>
+      <span class="vending-machine__eyebrow"> Self-service vending </span>
+      <h1>Choose your product</h1>
+      <p>Insert coins, select a product and receive your change automatically.</p>
     </div>
   </header>
+  <div class="vending-machine__transaction">
+    <app-coin-selector [coins]="acceptedCoins" (coinInserted)="onCointInserted($event)" />
+    <app-transaction-summary
+      [insertedAmount]="vendingStore.insertedAmount()"
+      /* [returnedCoins]="vendingStore.lastChange()"
+    [error]="vendingStore.error()"
+    (reset)="vendingStore.reset()" */
+    />
+  </div>
 
   @if (productsStore.loading()) {
     <div class="state-message">Loading products...</div>
@@ -16,8 +23,6 @@
       {{ productsStore.error() }}
     </div>
   } @else {
-    <app-vending-product-list
-      [products]="productsStore.products()"
-    />
+    <app-vending-product-list [products]="productsStore.products()" />
   }
 </section>

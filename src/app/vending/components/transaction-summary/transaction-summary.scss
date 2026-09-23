@@ -1,0 +1,120 @@
+:host {
+  display: block;
+}
+
+.transaction-summary {
+  padding: 1.5rem;
+  border: 1px solid rgb(0 0 0 / 5%);
+  border-radius: 1.5rem;
+  background: var(--vm-surface);
+  box-shadow: var(--vm-shadow);
+}
+
+.transaction-summary__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  h2 {
+    margin: 0.25rem 0 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+.transaction-summary__eyebrow {
+  color: var(--vm-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.transaction-summary__amount {
+  color: var(--vm-primary);
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.transaction-summary__message {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  font-size: 0.9rem;
+}
+
+.transaction-summary__message--error {
+  background: #fff0f0;
+  color: var(--vm-error);
+}
+
+.transaction-summary__change {
+  padding: 1rem 0;
+  border-top: 1px solid rgb(0 0 0 / 6%);
+}
+
+.transaction-summary__label {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: var(--vm-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.transaction-summary__coins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.transaction-summary__coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  min-height: 36px;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: var(--vm-primary-light);
+  color: var(--vm-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.transaction-summary__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+
+  button {
+    border-radius: 999px;
+  }
+}
+
+@media (max-width: 640px) {
+  .transaction-summary {
+    padding: 1.25rem;
+  }
+
+  .transaction-summary__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .transaction-summary__amount {
+    font-size: 1.6rem;
+  }
+
+  .transaction-summary__actions {
+    button {
+      width: 100%;
+    }
+  }
+}

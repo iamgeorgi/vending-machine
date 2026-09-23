@@ -66,3 +66,16 @@
     gap: 1.25rem;
   }
 }
+
+.vending-machine__transaction {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 760px) {
+  .vending-machine__transaction {
+    grid-template-columns: 1fr;
+  }
+}

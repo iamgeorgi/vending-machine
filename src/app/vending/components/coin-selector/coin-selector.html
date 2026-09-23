@@ -1,0 +1,26 @@
+<section class="coin-selector">
+  <div class="coin-selector__header">
+    <div>
+      <span class="coin-selector__eyebrow">
+        Insert coins
+      </span>
+    </div>
+  </div>
+
+  <div
+    class="coin-selector__coins"
+    aria-label="Accepted coin denominations"
+  >
+    @for (coin of coins(); track coin) {
+      <button
+        mat-flat-button
+        type="button"
+        class="coin-selector__coin"
+        [attr.aria-label]="'Insert ' + formatCoin(coin)"
+        (click)="onInsertCoin(coin)"
+      >
+        {{ formatCoin(coin) }}
+      </button>
+    }
+  </div>
+</section>
