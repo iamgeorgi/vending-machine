@@ -4,7 +4,7 @@ import { ProductsStore } from '../../../products/store/product.store';
 import { CoinSelector } from '../../components/coin-selector/coin-selector';
 import { ACCEPTED_COINS, VendingStore } from '../../store/vending.store';
 import { TransactionSummary } from '../../components/transaction-summary/transaction-summary';
-import { Product } from '../../../models/product.model';
+
 
 @Component({
   imports: [VendingProductList, CoinSelector, TransactionSummary],
@@ -25,7 +25,7 @@ export class VendingMachine implements OnInit {
     this.vendingStore.insertCoin(coin);
   }
 
-  onBuyProduct(product: Product) {
-    this.vendingStore.buyProduct(product);
+  onBuyProduct(productId: string) {
+    this.vendingStore.buyProduct(productId);
   }
 }

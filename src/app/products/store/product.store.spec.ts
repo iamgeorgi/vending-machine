@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
-import { Product } from '../../models/product.model';
+import { Product, ProductCategory } from '../../models/product.model';
 import { ProductApiService } from '../../services/product-api.service';
 import { ProductsStore } from './product.store';
 
@@ -29,7 +29,7 @@ describe('ProductsStore', () => {
     expect(store.error()).toBeNull();
 
     const products: Product[] = [
-      { id: '1', name: 'Water', category: 'beverage', price: 120, quantity: 5 },
+      { id: '1', name: 'Water', category: ProductCategory.Beverage, price: 120, quantity: 5 },
     ];
     secondRequest.next(products);
     secondRequest.complete();

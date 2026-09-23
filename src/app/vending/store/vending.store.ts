@@ -1,5 +1,4 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { Product } from '../../models/product.model';
 import { computed, inject } from '@angular/core';
 import { ProductsStore } from '../../products/store/product.store';
 
@@ -56,8 +55,18 @@ export const VendingStore = signalStore(
         error: null,
       });
     },
-    buyProduct: (product: Product) => {
-      if (product.quantity <= 0) {
+    buyProduct: (productId: string) => {
+      const product = productsStore.products().find((item) => item.id === productId);
+      if (!product) {
+        patchState(store, { error: 'Product is no longer available.' });
+        return;
+      }
+
+      if (!Number.isSafeInteger(product.price) || product.price <= 0) {
+        patchState(store, { error: 'Invalid product price.' });
+        return;
+      }
+      if (!Number.isSafeInteger(product.quantity) || product.quantity < 1) {
         patchState(store, {
           error: 'Out of stock.',
         });
@@ -85,7 +94,10 @@ export const VendingStore = signalStore(
         return;
       }
 
-      productsStore.decreaseProductQuantity(product.id);
+      if (!productsStore.decreaseProductQuantity(product.id)) {
+        patchState(store, { error: 'Product is no longer available.' });
+        return;
+      }
 
       patchState(store, {
         insertedCoins: [],

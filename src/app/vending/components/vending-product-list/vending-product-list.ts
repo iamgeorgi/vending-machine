@@ -10,9 +10,9 @@ import { VendingProductCard } from '../vending-product-card/vending-product-card
 })
 export class VendingProductList {
   readonly products = input.required<Product[]>();
-  readonly buyProduct = output<Product>();
+  readonly buyProduct = output<string>();
 
-  onBuyProduct(product: Product) {
-    this.buyProduct.emit(product);
+  onBuyProduct(productId: string) {
+    this.buyProduct.emit(productId);
   }
 }

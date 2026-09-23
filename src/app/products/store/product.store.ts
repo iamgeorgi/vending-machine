@@ -82,14 +82,19 @@ export const ProductsStore = signalStore(
       }));
     },
 
-    decreaseProductQuantity: (productId: string) => {
+    decreaseProductQuantity: (productId: string): boolean => {
+      const currentProduct = store.products().find((product) => product.id === productId);
+      if (!currentProduct || !Number.isSafeInteger(currentProduct.quantity) || currentProduct.quantity < 1) {
+        return false;
+      }
       patchState(store, (state) => ({
         products: state.products.map((product) =>
-          product.id === productId && product.quantity > 0
+          product.id === productId
             ? { ...product, quantity: product.quantity - 1 }
             : product,
         ),
       }));
+      return true;
     },
   })),
 );

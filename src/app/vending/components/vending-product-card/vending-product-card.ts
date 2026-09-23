@@ -12,10 +12,10 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class VendingProductCard {
   readonly product = input.required<Product>();
-  readonly buyProduct = output<Product>();
+  readonly buyProduct = output<string>();
 
   onBuy(id: string) {
-    this.buyProduct.emit(this.product());
+    this.buyProduct.emit(id);
   }
 
   getProductImage(): string {
