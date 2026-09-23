@@ -22,6 +22,37 @@ describe('VendingStore purchase', () => {
     vending.insertCoin(200);
   });
 
+  it('clears previous purchase change when starting another transaction', () => {
+    vending.buyProduct(product.id);
+    expect(vending.lastChange()).toEqual([50, 20, 10]);
+    vending.insertCoin(100);
+    expect(vending.lastChange()).toEqual([]);
+    expect(vending.insertedCoins()).toEqual([100]);
+    expect(products.products()[0].quantity).toBe(1);
+  });
+
+  it('clears the previous refund on the next accepted coin', () => {
+    vending.insertCoin(20);
+    vending.insertCoin(20);
+    vending.reset();
+    expect(vending.lastChange()).toEqual([200, 20, 20]);
+    vending.insertCoin(50);
+    expect(vending.lastChange()).toEqual([]);
+    expect(vending.insertedCoins()).toEqual([50]);
+    expect(products.products()[0].quantity).toBe(2);
+  });
+
+  it('preserves returned coins for rejected coins and clears the error on valid insertion', () => {
+    vending.reset();
+    vending.insertCoin(3);
+    expect(vending.lastChange()).toEqual([200]);
+    expect(vending.insertedCoins()).toEqual([]);
+    expect(vending.error()).toBe('Unsupported coin denomination.');
+    vending.insertCoin(10);
+    expect(vending.lastChange()).toEqual([]);
+    expect(vending.error()).toBeNull();
+    expect(vending.insertedAmount()).toBe(10);
+  });
   it('preserves payment when the product has been deleted', () => {
     products.deleteProduct(product.id);
     vending.buyProduct(product.id);

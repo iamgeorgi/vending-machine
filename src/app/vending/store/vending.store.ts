@@ -52,6 +52,7 @@ export const VendingStore = signalStore(
 
       patchState(store, {
         insertedCoins: [...store.insertedCoins(), coin],
+        lastChange: [],
         error: null,
       });
     },
