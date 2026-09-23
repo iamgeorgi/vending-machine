@@ -12,6 +12,7 @@ describe('VendingProductList', () => {
 
     fixture = TestBed.createComponent(VendingProductList);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('products', []);
     await fixture.whenStable();
   });
 

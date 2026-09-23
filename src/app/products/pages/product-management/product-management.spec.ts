@@ -17,6 +17,7 @@ describe('ProductManagement', () => {
           useValue: {
             products: signal<Product[]>([]),
             loading: signal(false),
+            loaded: signal(true),
             error: signal<string | null>(null),
             loadProducts: vi.fn(),
           },

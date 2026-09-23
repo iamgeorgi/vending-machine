@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { Product, ProductCategory } from '../../models/product.model';
 import { ProductApiService } from '../../services/product-api.service';
 import { ProductsStore } from '../../products/store/product.store';
-import { VendingStore } from './vending.store';
+import { ACCEPTED_COINS, calculateChange, VendingStore } from './vending.store';
 
 describe('VendingStore purchase', () => {
   let products: InstanceType<typeof ProductsStore>;
@@ -22,6 +22,52 @@ describe('VendingStore purchase', () => {
     vending.insertCoin(200);
   });
 
+  it('accepts all denominations and totals integer cents exactly', () => {
+    vending.reset();
+    for (const coin of ACCEPTED_COINS) vending.insertCoin(coin);
+    expect(vending.insertedCoins()).toEqual([...ACCEPTED_COINS]);
+    expect(vending.insertedAmount()).toBe(388);
+  });
+
+  it.each([0, -1, 3, 0.5, NaN, Infinity])('rejects unsupported coin %s without changing credit', coin => {
+    vending.insertCoin(coin);
+    expect(vending.insertedCoins()).toEqual([200]);
+    expect(vending.insertedAmount()).toBe(200);
+    expect(vending.error()).toBe('Unsupported coin denomination.');
+  });
+
+  it('supports repeated exact-payment purchases until stock is exhausted', () => {
+    vending.reset();
+    for (let i = 0; i < 2; i++) {
+      vending.insertCoin(100);
+      vending.insertCoin(20);
+      vending.buyProduct(product.id);
+      expect(vending.insertedCoins()).toEqual([]);
+      expect(vending.lastChange()).toEqual([]);
+      expect(vending.error()).toBeNull();
+      expect(products.products()[0].quantity).toBe(1 - i);
+    }
+    vending.insertCoin(200);
+    vending.buyProduct(product.id);
+    expect(vending.error()).toBe('Out of stock.');
+    expect(vending.insertedCoins()).toEqual([200]);
+    expect(products.products()[0].quantity).toBe(0);
+  });
+
+  it('returns exact inserted coins on reset and clears errors without purchasing', () => {
+    vending.insertCoin(20);
+    vending.insertCoin(20);
+    vending.buyProduct('missing');
+    vending.reset();
+    expect(vending.lastChange()).toEqual([200, 20, 20]);
+    expect(vending.insertedAmount()).toBe(0);
+    expect(vending.insertedCoins()).toEqual([]);
+    expect(vending.error()).toBeNull();
+    expect(products.products()[0].quantity).toBe(2);
+    vending.reset();
+    expect(vending.lastChange()).toEqual([]);
+    expect(products.products()[0].quantity).toBe(2);
+  });
   it('clears previous purchase change when starting another transaction', () => {
     vending.buyProduct(product.id);
     expect(vending.lastChange()).toEqual([50, 20, 10]);
@@ -106,5 +152,17 @@ describe('VendingStore purchase', () => {
     products.saveProduct({ ...product, quantity: 0 }, product.id);
     expect(products.decreaseProductQuantity(product.id)).toBe(false);
     expect(products.products()[0].quantity).toBe(0);
+  });
+});
+
+describe('calculateChange', () => {
+  it.each([0, 1, 9, 75, 199, 388, 999])('returns exactly %s cents using accepted denominations', amount => {
+    const change = calculateChange(amount)!;
+    expect(change.reduce((sum, coin) => sum + coin, 0)).toBe(amount);
+    expect(change.every(coin => (ACCEPTED_COINS as readonly number[]).includes(coin))).toBe(true);
+  });
+
+  it('rejects a fractional-cent remainder', () => {
+    expect(calculateChange(75.5)).toBeNull();
   });
 });

@@ -12,6 +12,7 @@ describe('TransactionSummary', () => {
 
     fixture = TestBed.createComponent(TransactionSummary);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('insertedAmount', 0);
     await fixture.whenStable();
   });
 
