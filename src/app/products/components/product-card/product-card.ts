@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { EuroPricePipe } from '../../../shared/pipes/euro-price.pipe';
+import { getProductImage } from '../../../shared/helpers';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Product, ProductCategory } from '../../../models/product.model';
+import { Product } from '../../../models/product.model';
 
 @Component({
-  imports: [CurrencyPipe, MatButtonModule, MatIconModule],
+  imports: [EuroPricePipe, MatButtonModule, MatIconModule],
   selector: 'app-product-card',
   styleUrl: './product-card.scss',
   templateUrl: './product-card.html',
@@ -26,23 +27,5 @@ export class ProductCard {
     this.delete.emit(id);
   }
 
-  getProductImage(): string {
-    return this.product().imageUrl ?? this.getCategoryImage();
-  }
-
-  getCategoryImage(): string {
-    switch (this.product().category) {
-      case ProductCategory.Beverage:
-        return 'assets/categories/beverage.png';
-
-      case ProductCategory.Snack:
-        return 'assets/categories/snack.png';
-
-      case ProductCategory.Candy:
-        return 'assets/categories/candy.png';
-
-      default:
-        return 'assets/categories/other.png';
-    }
-  }
+  protected readonly getProductImage = getProductImage;
 }

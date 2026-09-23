@@ -2,7 +2,7 @@
   <div class="product-card__image-wrapper">
     <img
       class="product-card__image"
-      [src]="getProductImage()"
+      [src]="getProductImage(product())"
       [alt]="product().name"
     />
 
@@ -45,7 +45,7 @@
 
     <footer class="product-card__footer">
       <strong class="product-card__price">
-        {{ product().price / 100 | currency: 'EUR' }}
+        {{ product().price | euroPrice }}
       </strong>
 
       <button

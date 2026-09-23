@@ -1,6 +1,6 @@
 <article class="vending-product-card">
   <div class="vending-product-card__image-wrapper">
-    <img class="vending-product-card__image" [src]="getProductImage()" [alt]="product().name" />
+    <img class="vending-product-card__image" [src]="getProductImage(product())" [alt]="product().name" />
 
     @if (product().quantity <= 0) {
       <span class="vending-product-card__sold-out"> Out of stock </span>
@@ -24,7 +24,7 @@
 
     <footer class="vending-product-card__footer">
       <strong class="vending-product-card__price">
-        {{ product().price / 100 | currency: 'EUR' }}
+        {{ product().price | euroPrice }}
       </strong>
 
       <button

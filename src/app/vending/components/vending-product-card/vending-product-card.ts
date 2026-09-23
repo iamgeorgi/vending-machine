@@ -1,11 +1,12 @@
 import { Component, input, output } from '@angular/core';
-import { Product, ProductCategory } from '../../../models/product.model';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { Product } from '../../../models/product.model';
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { CurrencyPipe } from '@angular/common';
+import { EuroPricePipe } from '../../../shared/pipes/euro-price.pipe';
+import { getProductImage } from '../../../shared/helpers';
 
 @Component({
-  imports: [CurrencyPipe, MatButtonModule, MatIconModule],
+  imports: [EuroPricePipe, MatButtonModule, MatIconModule],
   selector: 'app-vending-product-card',
   styleUrl: './vending-product-card.scss',
   templateUrl: './vending-product-card.html',
@@ -18,23 +19,5 @@ export class VendingProductCard {
     this.buyProduct.emit(id);
   }
 
-  getProductImage(): string {
-    return this.product().imageUrl ?? this.getCategoryImage();
-  }
-
-  getCategoryImage(): string {
-    switch (this.product().category) {
-      case ProductCategory.Beverage:
-        return 'assets/categories/beverage.png';
-
-      case ProductCategory.Snack:
-        return 'assets/categories/snack.png';
-
-      case ProductCategory.Candy:
-        return 'assets/categories/candy.png';
-
-      default:
-        return 'assets/categories/other.png';
-    }
-  }
+  protected readonly getProductImage = getProductImage;
 }
