@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import {
-  FormBuilder,
+  FormBuilder, AbstractControl,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -57,6 +57,8 @@ export class ProductForm {
         Validators.required,
         Validators.min(0),
         Validators.max(15),
+        (control: AbstractControl) => control.value == null || Number.isSafeInteger(control.value)
+          ? null : { integer: true },
       ],
     ],
   });
