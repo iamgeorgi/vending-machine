@@ -1,0 +1,28 @@
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 2rem;
+
+  background: var(--vm-surface);
+  border-bottom: 1px solid rgb(0 0 0 / 6%);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 4%);
+}
+
+.app-nav a {
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.app-nav__link--active {
+  background: var(--vm-primary-light);
+  color: var(--vm-primary);
+}
+
+@media (max-width: 640px) {
+  .app-nav {
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+  }
+}

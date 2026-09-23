@@ -1,1 +1,15 @@
+<nav class="app-nav">
+  <a
+    mat-button
+    routerLink="/"
+    routerLinkActive="app-nav__link--active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Vending Machine
+  </a>
+
+  <a mat-button routerLink="/products" routerLinkActive="app-nav__link--active">
+    Product Management
+  </a>
+</nav>
 <router-outlet />
