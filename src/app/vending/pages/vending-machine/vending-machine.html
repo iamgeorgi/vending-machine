@@ -10,9 +10,9 @@
     <app-coin-selector [coins]="acceptedCoins" (coinInserted)="onCointInserted($event)" />
     <app-transaction-summary
       [insertedAmount]="vendingStore.insertedAmount()"
-      /* [returnedCoins]="vendingStore.lastChange()"
-    [error]="vendingStore.error()"
-    (reset)="vendingStore.reset()" */
+      [returnedCoins]="vendingStore.lastChange()"
+      [error]="vendingStore.error()"
+      /* (reset)="vendingStore.reset()" */
     />
   </div>
 
@@ -23,6 +23,9 @@
       {{ productsStore.error() }}
     </div>
   } @else {
-    <app-vending-product-list [products]="productsStore.products()" />
+    <app-vending-product-list
+      [products]="productsStore.products()"
+      (buyProduct)="onBuyProduct($event)"
+    />
   }
 </section>

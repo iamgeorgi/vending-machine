@@ -2,7 +2,6 @@ import {
   getState,
   patchState,
   signalStore,
-  withComputed,
   withHooks,
   withMethods,
   withState,
@@ -28,7 +27,9 @@ const initialState: ProductState = {
 
 export const ProductsStore = signalStore(
   { providedIn: 'root' },
+
   withState(initialState),
+
   withMethods((store, productsApi = inject(ProductApiService)) => ({
     loadProducts: rxMethod<void>(
       pipe(
@@ -77,16 +78,15 @@ export const ProductsStore = signalStore(
         products: state.products.filter((product) => product.id !== productId),
       }));
     },
+
+    decreaseProductQuantity: (productId: string) => {
+      patchState(store, (state) => ({
+        products: state.products.map((product) =>
+          product.id === productId && product.quantity > 0
+            ? { ...product, quantity: product.quantity - 1 }
+            : product,
+        ),
+      }));
+    },
   })),
-  withHooks({
-    onInit(store) {
-      effect(() => {
-        const state = getState(store);
-        console.log('Store state changed:', state);
-      });
-    },
-    onDestroy(store) {
-      console.log('Store destroyed');
-    },
-  }),
 );

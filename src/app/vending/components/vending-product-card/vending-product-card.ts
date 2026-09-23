@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Product, ProductCategory } from '../../../models/product.model';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,8 +12,11 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class VendingProductCard {
   readonly product = input.required<Product>();
+  readonly buyProduct = output<Product>();
 
-  onBuy(id: string) {}
+  onBuy(id: string) {
+    this.buyProduct.emit(this.product());
+  }
 
   getProductImage(): string {
     return this.product().imageUrl ?? this.getCategoryImage();
