@@ -1,23 +1,26 @@
-<h2 mat-dialog-title>
+<h2 mat-dialog-title class="product-form__title">
   {{ product ? 'Edit product' : 'Add product' }}
 </h2>
 
 <form class="product-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-<mat-dialog-content>
+  <mat-dialog-content class="product-form__content">
+    <p class="product-form__subtitle">
+      {{
+        product
+          ? 'Update the product details below.'
+          : 'Add a new product to the vending machine inventory.'
+      }}
+    </p>
+
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
 
-      <input
-        matInput
-        formControlName="name"
-      />
+      <input matInput formControlName="name" autocomplete="off" />
 
       @if (form.controls.name.hasError('required')) {
-        <mat-error>
-          Product name is required.
-        </mat-error>
+        <mat-error> Product name is required. </mat-error>
       } @else if (form.controls.name.hasError('maxlength')) {
-        <mat-error>Product name cannot exceed 100 characters.</mat-error>
+        <mat-error> Product name cannot exceed 100 characters. </mat-error>
       }
     </mat-form-field>
 
@@ -33,61 +36,46 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Price</mat-label>
-      @if (form.controls.price.hasError('required')) {
-        <mat-error>Price is required.</mat-error>
-      } @else if (form.controls.price.hasError('min')) {
-        <mat-error>Price must be at least €0.01.</mat-error>
-      } @else if (form.controls.price.hasError('priceRange')) {
-        <mat-error>Price must convert to a safe integer number of cents.</mat-error>
-      } @else if (form.controls.price.hasError('centPrecision')) {
-        <mat-error>Price must have no more than two decimal places.</mat-error>
-      }
+    <div class="product-form__row">
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
 
-      <input
-        matInput
-        type="number"
-        step="0.01"
-        min="0.01"
-        formControlName="price"
-      />
+        <span matTextPrefix>€&nbsp;</span>
 
-      <span matTextPrefix>€&nbsp;</span>
-    </mat-form-field>
+        <input matInput type="number" step="0.01" min="0.01" formControlName="price" />
 
-    <mat-form-field appearance="outline">
-      <mat-label>Quantity</mat-label>
+        @if (form.controls.price.hasError('required')) {
+          <mat-error>Price is required.</mat-error>
+        } @else if (form.controls.price.hasError('min')) {
+          <mat-error>Price must be at least €0.01.</mat-error>
+        } @else if (form.controls.price.hasError('priceRange')) {
+          <mat-error>Price is outside the supported range.</mat-error>
+        } @else if (form.controls.price.hasError('centPrecision')) {
+          <mat-error>Use at most two decimal places.</mat-error>
+        }
+      </mat-form-field>
 
-      <input
-        matInput
-        type="number"
-        min="0"
-        max="15"
-        step="1"
-        formControlName="quantity"
-      />
-      @if (form.controls.quantity.invalid) {
-        <mat-error>Quantity must be a whole number from 0 to 15.</mat-error>
-      }
-    </mat-form-field>
-</mat-dialog-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Quantity</mat-label>
 
-<mat-dialog-actions align="end">
-  <button
-    mat-button
-    type="button"
-    (click)="onCancel()"
-  >
-    Cancel
-  </button>
+        <input matInput type="number" min="0" max="15" step="1" formControlName="quantity" />
 
-  <button
-    mat-flat-button
-    type="submit"
-    [disabled]="form.invalid"
-  >
-    {{ product ? 'Save changes' : 'Add product' }}
-  </button>
-</mat-dialog-actions>
+        <mat-hint>0–15 units</mat-hint>
+
+        @if (form.controls.quantity.invalid) {
+          <mat-error> Quantity must be a whole number from 0 to 15. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="product-form__actions">
+    <button mat-button type="button" class="product-form__cancel" (click)="onCancel()">
+      Cancel
+    </button>
+
+    <button mat-flat-button type="submit" class="product-form__submit" [disabled]="form.invalid">
+      {{ product ? 'Save changes' : 'Add product' }}
+    </button>
+  </mat-dialog-actions>
 </form>
